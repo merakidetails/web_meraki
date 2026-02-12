@@ -8,7 +8,7 @@ title: Carrito - Meraki Gift Store
     checkout() {
         let message = '*Hola Meraki!* Me gustaría realizar el siguiente pedido:%0A%0A';
         this.cart.forEach(item => {
-            message += `- ${item.title} x${item.qty} - $${(item.price * item.qty).toFixed(2)}%0A`;
+            message += `- *${item.title}* ${item.code ? `(Cod: ${item.code})` : ''} x${item.qty} - $${(item.price * item.qty).toFixed(2)}%0A`;
             if(item.customImage) message += `  (Imagen personalizada)%0A`;
         });
         message += `%0A*Total: $${this.cartTotal.toFixed(2)}*`;
