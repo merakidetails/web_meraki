@@ -5,6 +5,9 @@ collections_config:
     output: true
     url: /products/[slug]/
     _inputs:
+      tags:
+        type: hidden
+        defaultValue: products
       title:
         type: text
         comment: Product Name
@@ -31,12 +34,16 @@ collections_config:
         type: checkbox
         label: "¿Es Más Vendido?"
 
-items_config:
   gallery:
-    path: src/_data/gallery.json
-    type: json
-    parser: json
+    name: Galería
+    path: src/gallery
+    output: false
     _inputs:
+      tags:
+        type: hidden
+        defaultValue: gallery
+      title:
+        type: text
       category:
         type: select
         options:
@@ -47,11 +54,5 @@ items_config:
             - "Llaveros"
             - "Cuadros"
             - "Otros"
-    schema:
-      type: array
-      items:
-        type: object
-        properties:
-          title: { type: string }
-          category: { type: string }
-          image: { type: image }
+      image:
+        type: image
