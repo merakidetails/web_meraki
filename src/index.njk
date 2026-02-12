@@ -80,12 +80,12 @@ title: Meraki Gift Store - Regalos hechos con amor
         <a href="/shop" class="text-primary font-semibold flex items-center hover:underline">Ver todo <span class="material-icons text-sm ml-1">arrow_forward</span></a>
      </div>
      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {% set newProducts = products %}
-        {% for product in newProducts %}
-        {% if product.is_new and loop.index <= 4 %}
+        {% set bestsellers = products %}
+        {% for product in bestsellers %}
+        {% if product.is_bestseller and loop.index <= 4 %}
             <div class="group bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 dark:border-white/10">
                 <div class="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800">
-                    <span class="absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded shadow-md uppercase bg-yellow-400 text-black">NUEVO</span>
+                    <span class="absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded shadow-md uppercase bg-primary text-white">MÁS VENDIDO</span>
                     {% if product.image %}
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ sanity.urlFor(product.image).width(400).url() }}" alt="{{ product.title }}" />
                     {% endif %}
