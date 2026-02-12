@@ -62,3 +62,16 @@ collections_config:
             - "Otros"
       image:
         type: image
+
+paths:
+  uploads: src/assets/img
+  dam_uploads: src/assets/img
+  dam_static: ''
+
+_inputs:
+  image:
+    type: image
+    options:
+      paths:
+        uploads: src/assets/img
+        dam_uploads: src/assets/img
