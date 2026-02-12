@@ -4,10 +4,13 @@ collections_config:
     path: src/products
     output: true
     url: /products/[slug]/
+    schema_key: default
+    schemas:
+      default:
+        path: schemas/product.md
+    create:
+      path: '[relative_base_path]/{title|slugify}.md'
     _inputs:
-      tags:
-        type: hidden
-        defaultValue: products
       title:
         type: text
         comment: Product Name
@@ -38,10 +41,13 @@ collections_config:
     name: Galería
     path: src/gallery
     output: false
+    schema_key: default
+    schemas:
+      default:
+        path: schemas/gallery.md
+    create:
+      path: '[relative_base_path]/{title|slugify}.md'
     _inputs:
-      tags:
-        type: hidden
-        defaultValue: gallery
       title:
         type: text
       category:
