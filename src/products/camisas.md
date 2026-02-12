@@ -1,9 +1,9 @@
 ---
-default:
+default: default
 tags: products
-title: camisa
+title: Camisas
 price: 10.5
-image: /uploads/white-3d-t-shirt-mock-up-free-vector.jpg
+image: /src/assets/img/white-3d-t-shirt-mock-up-free-vector.jpg
 category: Camisas
 description:
 is_new: true
