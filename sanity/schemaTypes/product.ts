@@ -10,6 +10,27 @@ export default defineType({
             title: 'Código de Producto',
             type: 'string',
             description: 'Identificador único (ej. CAM-001)',
+            validation: Rule => Rule.custom(async (code, context) => {
+                if (!code) return true
+                const { document, getClient } = context
+                if (!document) return true
+
+                const client = getClient({ apiVersion: '2021-03-25' })
+                const id = document._id.replace(/^drafts\./, '')
+                const params = {
+                    draft: `drafts.${id}`,
+                    published: id,
+                    code
+                }
+                const query = `!defined(*[
+                    _type == "product" &&
+                    !(_id in [$draft, $published]) &&
+                    code == $code
+                ][0]._id)`
+
+                const isUnique = await client.fetch(query, params)
+                return isUnique ? true : 'Este código ya está en uso por otro producto'
+            })
         }),
         defineField({
             name: 'title',

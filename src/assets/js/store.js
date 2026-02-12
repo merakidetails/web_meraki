@@ -30,6 +30,11 @@ document.addEventListener('alpine:init', () => {
             const existing = this.cart.find(item => item.id === product.id);
             if (existing) {
                 existing.qty++;
+                // Update properties in case they changed (like code or price)
+                existing.title = product.title;
+                existing.price = product.price;
+                existing.img = product.img;
+                existing.code = product.code;
             } else {
                 this.cart.push({ ...product, qty: 1 });
             }
