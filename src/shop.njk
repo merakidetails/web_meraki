@@ -21,7 +21,7 @@ title: Tienda - Meraki Gift Store
             </nav>
             <div class="mt-8 pt-8 border-t border-gray-100 dark:border-white/10">
                 <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Filtrar por Precio</h3>
-                <input class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" type="range" min="0" max="100" x-model="maxPrice" />
+                <input class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" type="range" min="0" :max="maxPrice" x-model="maxPrice" />
                 <div class="flex justify-between mt-2 text-xs text-gray-500 font-medium"><span>$0</span><span x-text="'$' + maxPrice"></span></div>
             </div>
         </aside>
@@ -70,19 +70,24 @@ title: Tienda - Meraki Gift Store
 
 <script>
     function shopLogic() {
+        const products = [
+            {% for product in collections.products %}
+            {
+                id: "{{ product.fileSlug }}",
+                title: "{{ product.data.title }}",
+                price: {{ product.data.price }},
+                img: "{{ product.data.image }}",
+                category: "{{ product.data.category }}",
+                tag: "{{ 'Nuevo' if product.data.is_new else ('Más vendido' if product.data.is_bestseller else '') }}"
+            },
+            {% endfor %}
+        ];
+        
+        const maxProductPrice = products.length > 0 ? Math.max(...products.map(p => p.price)) : 100;
+        const calculatedMaxPrice = Math.ceil(maxProductPrice + 5);
+        
         return {
-            products: [
-                {% for product in collections.products %}
-                {
-                    id: "{{ product.fileSlug }}",
-                    title: "{{ product.data.title }}",
-                    price: {{ product.data.price }},
-                    img: "{{ product.data.image }}",
-                    category: "{{ product.data.category }}",
-                    tag: "{{ 'Nuevo' if product.data.is_new else ('Más vendido' if product.data.is_bestseller else '') }}"
-                },
-                {% endfor %}
-            ],
+            products: products,
             categories: [
                 { name: "Todos", icon: "grid_view" },
                 { name: "Camisas", icon: "checkroom" },
@@ -93,7 +98,7 @@ title: Tienda - Meraki Gift Store
                 { name: "Otros", icon: "more_horiz" }
             ],
             selectedCategory: 'Todos',
-            maxPrice: 100,
+            maxPrice: calculatedMaxPrice,
             sortBy: 'popular',
 
             get filteredProducts() {

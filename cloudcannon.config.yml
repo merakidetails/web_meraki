@@ -11,6 +11,9 @@ collections_config:
     create:
       path: '[relative_base_path]/{title|slugify}.md'
     _inputs:
+      tags:
+        type: text
+        hidden: true
       title:
         type: text
         comment: Product Name
@@ -62,6 +65,39 @@ collections_config:
             - "Otros"
       image:
         type: image
+
+  faq:
+    name: Preguntas Frecuentes
+    path: src/faq
+    output: false
+    schema_key: default
+    schemas:
+      default:
+        path: schemas/faq.md
+    create:
+      path: '[relative_base_path]/{pregunta|slugify}.md'
+    _inputs:
+      tags:
+        type: text
+        hidden: true
+      pregunta:
+        type: text
+        label: Pregunta
+      respuesta:
+        type: textarea
+        label: Respuesta
+      orden:
+        type: number
+        label: Orden de visualización
+
+data_config:
+  site:
+    path: src/_data/site.json
+    _inputs:
+      customizeImage:
+        type: image
+        label: Imagen para "Cómo Comprar - Personalizado"
+        comment: Esta imagen aparece en la pestaña de personalización
 
 paths:
   uploads: src/assets/img

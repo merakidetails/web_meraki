@@ -23,15 +23,52 @@ title: Meraki Gift Store - Regalos hechos con amor
                     </a>
                 </div>
             </div>
-            <div class="relative lg:block hidden">
-                <div class="relative rounded-2xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white dark:border-gray-800">
-                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW6fWNxk4eBaiZCnu08prMg6-c2lcWrVw9hJikSyIPT5GzNE33YNDuYsk3E3mNit87yjlERiuaJZpy9CkNJo0jjd65QmB5bmum-nwCWgkifRY1r19jQ-IUSMu2hosFu5kNwdWcWcRamXdBMheNLiC2X453n5jubHSSmFZ-xa1Xco61cQIjJMUSjqbdyMPRP2D9h2Bf92WHcQHaTWWVQGMwzHk9rEorJRDoI8FEYZY17vC0UehUf9abQTLYp7Q9umcRC2CINDHGSQ" alt="Gift wrapping scene" />
-                    <div class="absolute bottom-6 left-6 right-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-primary/10 flex items-center gap-4">
-                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary"><span class="material-icons">card_giftcard</span></div>
-                        <div><h4 class="font-bold text-gray-900 dark:text-white">Cajas Sorpresa</h4><p class="text-sm text-gray-500">Desde $25.00</p></div>
-                        <a href="/shop" class="ml-auto w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center shadow-md hover:bg-primary/90"><span class="material-icons text-sm">arrow_forward</span></a>
+            <div class="relative lg:block hidden" x-data="{ 
+                currentIndex: 0, 
+                featuredProducts: [
+                    {% for product in collections.products %}
+                    {% if product.data.is_bestseller %}
+                    {
+                        title: '{{ product.data.title }}',
+                        price: {{ product.data.price }},
+                        image: '{{ product.data.image }}',
+                        category: '{{ product.data.category }}'
+                    },
+                    {% endif %}
+                    {% endfor %}
+                ],
+                init() {
+                    if (this.featuredProducts.length > 0) {
+                        setInterval(() => {
+                            this.currentIndex = (this.currentIndex + 1) % this.featuredProducts.length;
+                        }, 20000);
+                    }
+                }
+            }">
+                <template x-if="featuredProducts.length > 0">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white dark:border-gray-800">
+                        <template x-for="(product, index) in featuredProducts" :key="index">
+                            <div x-show="currentIndex === index" 
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-95"
+                                 x-transition:enter-end="opacity-100 transform scale-100"
+                                 x-transition:leave="transition ease-in duration-300"
+                                 x-transition:leave-start="opacity-100 transform scale-100"
+                                 x-transition:leave-end="opacity-0 transform scale-95"
+                                 class="relative">
+                                <img class="w-full h-full object-cover aspect-square" :src="product.image" :alt="product.title" />
+                                <div class="absolute bottom-6 left-6 right-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-primary/10 flex items-center gap-4">
+                                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary"><span class="material-icons">card_giftcard</span></div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 dark:text-white" x-text="product.title"></h4>
+                                        <p class="text-sm text-gray-500" x-text="'$' + product.price.toFixed(2)"></p>
+                                    </div>
+                                    <a href="/shop" class="ml-auto w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center shadow-md hover:bg-primary/90"><span class="material-icons text-sm">arrow_forward</span></a>
+                                </div>
+                            </div>
+                        </template>
                     </div>
-                </div>
+                </template>
             </div>
         </div>
     </div>
@@ -43,22 +80,26 @@ title: Meraki Gift Store - Regalos hechos con amor
         <a href="/shop" class="text-primary font-semibold flex items-center hover:underline">Ver todo <span class="material-icons text-sm ml-1">arrow_forward</span></a>
      </div>
      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {% for product in featured_products %}
+        {% set newProducts = collections.products | reverse %}
+        {% for product in newProducts %}
+        {% if product.data.is_new and loop.index <= 4 %}
             <div class="group bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 dark:border-white/10">
                 <div class="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800">
-                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ product.img }}" alt="{{ product.title }}" />
+                    <span class="absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded shadow-md uppercase bg-yellow-400 text-black">NUEVO</span>
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ product.data.image }}" alt="{{ product.data.title }}" />
                 </div>
                 <div class="p-5">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">{{ product.title }}</h3>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">{{ product.data.title }}</h3>
                     <div class="flex items-center justify-between mt-4">
-                        <span class="text-lg font-bold text-primary">{{ product.price }}</span>
+                        <span class="text-lg font-bold text-primary">${{ product.data.price }}</span>
                         <button class="w-10 h-10 rounded-xl bg-primary/10 text-primary hover:bg-primary hover:text-white flex items-center justify-center transition-all"
-                                @click="addToCart({ id: '{{ product.id }}', title: '{{ product.title }}', price: {{ product.priceNum }}, img: '{{ product.img }}' })">
+                                @click="addToCart({ id: '{{ product.fileSlug }}', title: '{{ product.data.title }}', price: {{ product.data.price }}, img: '{{ product.data.image }}' })">
                             <span class="material-icons">add_shopping_cart</span>
                         </button>
                     </div>
                 </div>
             </div>
+        {% endif %}
         {% endfor %}
      </div>
 </section>

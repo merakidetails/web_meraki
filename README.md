@@ -1,6 +1,6 @@
 # Meraki Gift Store
 
-Aplicación web moderna para "Meraki Gift Store", construida con **Eleventy**, **Tailwind CSS** y **Alpine.js**. Diseñada para ser desplegada en **Netlify** y gestionada a través de **CloudCannon**.
+Aplicación web moderna para "Meraki Gift Store", construida con **Eleventy**, **Tailwind CSS** y **Alpine.js**. Diseñada para ser desplegada en **Vercel** y gestionada a través de **CloudCannon**.
 
 ## Características
 
@@ -42,13 +42,14 @@ Aplicación web moderna para "Meraki Gift Store", construida con **Eleventy**, *
    ```
    Los archivos generados estarán en la carpeta `_site`.
 
-## Despliegue en Netlify
+## Despliegue en Vercel
 
-1. Conecta tu repositorio de GitHub a Netlify.
-2. Netlify detectará automáticamente el archivo `netlify.toml`.
-3. **Configuración de Build**:
+1. Conecta tu repositorio de GitHub a Vercel.
+2. Vercel detectará automáticamente el framework (Eleventy) y el archivo `vercel.json`.
+3. **Configuración de Build** (auto-detectada):
    - **Comando de Build**: `npm run build`
    - **Directorio de publicación**: `_site`
+4. Haz clic en "Deploy" y tu sitio estará en línea en minutos.
 
 ## Integración con CloudCannon
 
