@@ -1,0 +1,83 @@
+---
+layout: layout.njk
+title: Preguntas Frecuentes
+---
+
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl font-display font-bold text-center text-primary-dark mb-12">Preguntas Frecuentes</h1>
+
+    <div class="max-w-3xl mx-auto space-y-6">
+        
+        <!-- Shipping Notice -->
+        <div class="bg-primary-50 border-l-4 border-primary p-4 rounded-r shadow-sm">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-primary-dark font-bold">
+                        Aviso Importante: No realizamos envíos a nivel nacional por el momento.
+                    </p>
+                    <p class="text-sm text-primary-dark mt-1">
+                        Las entregas se limitan a zonas locales específicas. Contáctanos para más detalles.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 1 -->
+        <details class="group bg-white rounded-xl shadow-sm border border-primary-100 open:ring-2 open:ring-primary-100 open:shadow-md transition-all duration-300">
+            <summary class="flex justify-between items-center cursor-pointer p-6 font-display font-semibold text-lg text-neutral-dark list-none">
+                <span>¿Cómo realizo un pedido personalizado?</span>
+                <span class="transition group-open:rotate-180">
+                    <svg fill="none" class="w-6 h-6 text-primary" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </summary>
+            <div class="px-6 pb-6 text-gray-600 animate-fadeIn">
+                <p>Para pedidos personalizados, puedes dirigirte a la sección "Cómo Comprar" y seleccionar la pestaña "Personalizado". Ahí encontrarás un botón que te llevará directamente a nuestro WhatsApp para coordinar los detalles de tu diseño.</p>
+            </div>
+        </details>
+
+        <!-- FAQ Item 2 -->
+        <details class="group bg-white rounded-xl shadow-sm border border-primary-100 open:ring-2 open:ring-primary-100 open:shadow-md transition-all duration-300">
+            <summary class="flex justify-between items-center cursor-pointer p-6 font-display font-semibold text-lg text-neutral-dark list-none">
+                <span>¿Cuánto tiempo tarda la entrega?</span>
+                <span class="transition group-open:rotate-180">
+                    <svg fill="none" class="w-6 h-6 text-primary" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </summary>
+            <div class="px-6 pb-6 text-gray-600 animate-fadeIn">
+                <p>El tiempo de entrega depende del tipo de producto y si es personalizado. Generalmente, los productos en stock se entregan en 24-48 horas, mientras que los personalizados pueden tardar de 3 a 5 días hábiles.</p>
+            </div>
+        </details>
+
+        <!-- FAQ Item 3 -->
+        <details class="group bg-white rounded-xl shadow-sm border border-primary-100 open:ring-2 open:ring-primary-100 open:shadow-md transition-all duration-300">
+            <summary class="flex justify-between items-center cursor-pointer p-6 font-display font-semibold text-lg text-neutral-dark list-none">
+                <span>¿Qué métodos de pago aceptan?</span>
+                <span class="transition group-open:rotate-180">
+                    <svg fill="none" class="w-6 h-6 text-primary" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </summary>
+            <div class="px-6 pb-6 text-gray-600 animate-fadeIn">
+                <p>Aceptamos pagos en efectivo contra entrega (en zonas locales) y transferencias bancarias. Coordinaremos el método de pago al confirmar tu pedido por WhatsApp.</p>
+            </div>
+        </details>
+        
+        <!-- FAQ Item 4 -->
+         <details class="group bg-white rounded-xl shadow-sm border border-primary-100 open:ring-2 open:ring-primary-100 open:shadow-md transition-all duration-300">
+            <summary class="flex justify-between items-center cursor-pointer p-6 font-display font-semibold text-lg text-neutral-dark list-none">
+                <span>¿Tienen tienda física?</span>
+                <span class="transition group-open:rotate-180">
+                    <svg fill="none" class="w-6 h-6 text-primary" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </summary>
+            <div class="px-6 pb-6 text-gray-600 animate-fadeIn">
+                <p>Actualmente operamos como tienda en línea. Estamos ubicados en {{ site.location }} para entregas locales.</p>
+            </div>
+        </details>
+
+    </div>
+</div>

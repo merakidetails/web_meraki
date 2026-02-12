@@ -15,31 +15,38 @@ collections_config:
       category:
         type: select
         options:
-          - values: 
-            - Tazas
-            - Camisas
-            - Botellas
-            - Marcos
-            - Gorras
-            - Cajas Sorpresa
-            - Flores
-            - Dulces
-            - Tarjetería
-            - Corporativo
-            - Otros
+          values:
+            - "Camisas"
+            - "Tazas"
+            - "Botellas"
+            - "Llaveros"
+            - "Cuadros"
+            - "Otros"
       description:
         type: markdown
       is_new:
-        type: boolean
-        label: Nuevo
+        type: checkbox
+        label: "¿Es Nuevo?"
       is_bestseller:
-        type: boolean
-        label: Más Vendido
+        type: checkbox
+        label: "¿Es Más Vendido?"
 
 items_config:
   gallery:
     path: src/_data/gallery.json
     type: json
+    parser: json
+    _inputs:
+      category:
+        type: select
+        options:
+          values:
+            - "Camisas"
+            - "Tazas"
+            - "Botellas"
+            - "Llaveros"
+            - "Cuadros"
+            - "Otros"
     schema:
       type: array
       items:
