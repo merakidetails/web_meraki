@@ -1,6 +1,7 @@
 ---
+default: default
 tags: gallery
 title: Edición San Valentín
 category: Otros
-image: /uploads/meraki.png
+image: /src/assets/img/meraki.png
 ---
