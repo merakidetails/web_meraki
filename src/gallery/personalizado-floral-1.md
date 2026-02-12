@@ -1,6 +1,0 @@
----
-tags: gallery
-title: "Personalizado Floral"
-category: "Tazas"
-image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMQzKlCl4nJECFZXY5XKV8AOu_JW6zQWCsY54EPVPEnreZ8dp8NuJTIEmWxn5BVGBNzPpgDBZiFwA7fMa3m1XHsWSkwWDs4jecSUUlN3CdBa3dxhzxPOmd6aNZQxYY-_O8z03V4syY8RD4uOb3eCcaFqfDUNABKlWm7KdUsL-YS6lYJv8BvAdpv6SC_cxez2iySXf_RJSbO4iREArERbsyaMcuCv8uGnLIfwJEUpZfTfYJJPeT9MzN9Vq1-xBatdU7eGiY9FS3Sw"
----

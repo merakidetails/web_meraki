@@ -1,6 +1,0 @@
----
-tags: gallery
-title: "Kits de Bienvenida"
-category: "Otros"
-image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCQNxzPkU4flOh0DLC5l_ZEBFwohKUf_F9UtZQl4OC_eR4OggpyA7MQRvesDl2l8KK0A7yM6lB3DA6vmAq37XTLivbuWeYhQsCfeMdnPUsvmY9mS32OIyKn3Y3F6-xh4HQMW7H3vfiXKFn-TbAwfZhP3SFi1h6LtTRic7uG3bdVIi_YKy7eXHxcREaw2rmKiKZAnIzpw2faLXJeb1Zx2CuQpm4yLbpJyaUfs40xuyW9rRiH8G1iV1pjlZ2sCo8TZT7ImMa2dr0Dyw"
----
