@@ -14,22 +14,34 @@ title: Galería - Meraki Gift Store
 
 <section class="pb-24 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-            <button class="px-6 py-2 bg-primary text-white rounded-full font-medium">Todos</button>
-            <button class="px-6 py-2 bg-white dark:bg-surface-dark border rounded-full font-medium">Cajas de Regalo</button>
-            <button class="px-6 py-2 bg-white dark:bg-surface-dark border rounded-full font-medium">Tazas</button>
-        </div>
-        <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            {% for item in gallery %}
-            <div class="break-inside-avoid group relative rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer">
-                <img class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src="{{ item.img }}" alt="{{ item.title }}" />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
-                    <span class="text-primary-light text-sm font-bold uppercase mb-1">{{ item.cat }}</span>
-                    <h3 class="text-white text-xl font-bold">{{ item.title }}</h3>
-                </div>
+<div x-data="{ selectedCat: 'Todos' }">
+    <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <button @click="selectedCat = 'Todos'" 
+                :class="selectedCat === 'Todos' ? 'bg-primary text-white border-primary' : 'bg-white dark:bg-surface-dark border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-primary hover:text-primary'"
+                class="px-6 py-2 border rounded-full font-medium transition-all">Todos</button>
+        
+        {% set categories = ["Camisas", "Tazas", "Botellas", "Llaveros", "Cuadros", "Otros"] %}
+        {% for cat in categories %}
+        <button @click="selectedCat = '{{ cat }}'" 
+                :class="selectedCat === '{{ cat }}' ? 'bg-primary text-white border-primary' : 'bg-white dark:bg-surface-dark border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-primary hover:text-primary'"
+                class="px-6 py-2 border rounded-full font-medium transition-all">{{ cat }}</button>
+        {% endfor %}
+    </div>
+
+    <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+        {% for item in gallery %}
+        <div x-show="selectedCat === 'Todos' || selectedCat === '{{ item.category }}'" 
+             x-transition.opacity.duration.300ms
+             class="break-inside-avoid group relative rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer bg-gray-100 dark:bg-gray-800">
+            <img class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src="{{ item.image }}" alt="{{ item.title }}" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+                <span class="text-primary-light text-xs font-bold uppercase mb-1 tracking-wider">{{ item.category }}</span>
+                <h3 class="text-white text-lg font-bold leading-tight">{{ item.title }}</h3>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+    </div>
+</div>
     </div>
     </div>
 </section>
