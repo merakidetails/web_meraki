@@ -1,5 +1,5 @@
 ---
-title: Camisa Meraki Logo
+title: 'Camisa '
 price: 10.5
 image: /uploads/white-3d-t-shirt-mock-up-free-vector.jpg
 category: Camisas
