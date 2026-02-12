@@ -1,0 +1,32 @@
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-surface-dark/90 backdrop-blur-md border-b border-primary/10 dark:border-primary/20"
+     x-data>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20 items-center">
+            <a href="/" class="flex items-center gap-2 cursor-pointer">
+                <span class="material-icons text-primary text-3xl">favorite</span>
+                <span class="font-extrabold text-2xl tracking-tight text-gray-900 dark:text-white">Meraki</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="/" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors font-medium">Inicio</a>
+                <a href="/shop" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors font-medium">Tienda</a>
+                <a href="/gallery" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors font-medium">Galería</a>
+                <a href="/how-to-order" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors font-medium">Cómo Comprar</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="p-2 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors" 
+                        @click="toggleTheme()">
+                    <span class="material-icons" x-text="isDark ? 'light_mode' : 'dark_mode'"></span>
+                </button>
+                <a href="/cart" class="p-2 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors relative">
+                    <span class="material-icons">shopping_bag</span>
+                    <span class="absolute top-1 right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-primary rounded-full"
+                          x-show="cart.length > 0"
+                          x-text="cartCount"></span>
+                </a>
+                <button class="md:hidden p-2 text-gray-600 dark:text-gray-300">
+                    <span class="material-icons">menu</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>

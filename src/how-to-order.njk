@@ -1,0 +1,100 @@
+---
+layout: layout.njk
+title: Cómo Comprar - Meraki Gift Store
+---
+
+<div x-data="{ activeTab: 'normal' }">
+    <section class="relative py-16 md:py-24 overflow-hidden">
+        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4 uppercase tracking-wider">Guía de Compra</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 leading-tight">¿Cómo realizar tu pedido?</h1>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                En Meraki queremos que tu experiencia sea mágica. Elige si prefieres un producto de nuestro catálogo o algo 100% personalizado para ti.
+            </p>
+        </div>
+    </section>
+
+    <main class="pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-center mb-16">
+                <div class="inline-flex bg-white dark:bg-surface-dark p-1.5 rounded-xl shadow-lg border border-gray-100 dark:border-gray-800 relative">
+                    <div class="absolute h-[calc(100%-0.75rem)] w-[calc(50%-0.375rem)] bg-primary rounded-lg transition-all duration-300 ease-in-out shadow-md"
+                         :class="activeTab === 'custom' ? 'translate-x-[102%]' : ''" style="left: 0.375rem; top: 0.375rem;"></div>
+                    <button @click="activeTab = 'normal'" class="relative z-10 px-8 py-3 font-bold rounded-lg transition-colors w-48 flex items-center justify-center gap-2"
+                            :class="activeTab === 'normal' ? 'text-white' : 'text-gray-500'">
+                        <span class="material-icons-round">storefront</span> Pedido Normal
+                    </button>
+                    <button @click="activeTab = 'custom'" class="relative z-10 px-8 py-3 font-bold rounded-lg transition-colors w-48 flex items-center justify-center gap-2"
+                            :class="activeTab === 'custom' ? 'text-white' : 'text-gray-500'">
+                        <span class="material-icons-round">edit</span> Personalizado
+                    </button>
+                </div>
+            </div>
+
+            <div x-show="activeTab === 'normal'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 tab-content active">
+                <div class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all text-center">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6 mx-auto relative border-4 border-white dark:border-surface-dark">
+                        <span class="material-icons-round text-3xl">search</span>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full text-xs font-bold flex items-center justify-center">1</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Explora</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Navega por nuestro catálogo lleno de detalles únicos.</p>
+                </div>
+                <!-- ... other steps ... -->
+                 <div class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all text-center">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6 mx-auto relative border-4 border-white dark:border-surface-dark">
+                        <span class="material-icons-round text-3xl">shopping_cart</span>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full text-xs font-bold flex items-center justify-center">2</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Añade al Carrito</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Selecciona tus favoritos y agrégalos a tu carrito de compras.</p>
+                </div>
+                <div class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all text-center">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6 mx-auto relative border-4 border-white dark:border-surface-dark">
+                        <span class="material-icons-round text-3xl">chat</span>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full text-xs font-bold flex items-center justify-center">3</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Finaliza en WhatsApp</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Te redirigiremos a WhatsApp con tu pedido listo para confirmar.</p>
+                </div>
+                 <div class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all text-center">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6 mx-auto relative border-4 border-white dark:border-surface-dark">
+                        <span class="material-icons-round text-3xl">sentiment_satisfied_alt</span>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full text-xs font-bold flex items-center justify-center">4</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">¡Recibe y Disfruta!</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Procesaremos tu pedido con mucho cariño.</p>
+                </div>
+            </div>
+
+            <div x-show="activeTab === 'custom'" class="bg-white dark:bg-surface-dark rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 dark:border-gray-800 flex flex-col lg:flex-row gap-12 items-center tab-content active">
+                <div class="w-full lg:w-1/2 rounded-2xl overflow-hidden aspect-video lg:aspect-square">
+                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9Vz3nht1V8msaExEQ-ORYnyYqQxPLQrY4gjsH68hhyoDNfwV0QSkzVsz2NbbdBsAr0_PSVpUxjK_DDVvFVuigivQNe5aU3bCq20KG6MRBP7JMpKy216-1q2RFPXdkd1JdCXYIWhB4r4PxBSr1vauoO8RVbUoJ9vHpFuopcijwLjE31SYaZLstv0wrUK6gMbwNyqEyNURyNvT6b6J570i2eIWTJggGXd4iB6UIdw-TEvrHbci2RL3-OTxAanr1_KKRlluJvweKsA" alt="Custom process" />
+                </div>
+                <div class="w-full lg:w-1/2 space-y-8">
+                    <h3 class="text-2xl font-bold">Proceso Creativo</h3>
+                    <ul class="space-y-6 relative border-l-2 border-gray-100 dark:border-gray-700 pl-8 ml-6">
+                        <li class="relative group">
+                            <div class="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors">1</div>
+                            <h4 class="text-lg font-bold group-hover:text-primary transition-colors">Contáctanos</h4>
+                            <p class="text-gray-500 text-sm mt-1">Haz clic en el botón de WhatsApp para iniciar una conversación.</p>
+                        </li>
+                        <li class="relative group">
+                            <div class="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors">2</div>
+                            <h4 class="text-lg font-bold group-hover:text-primary transition-colors">Detalles & Referencias</h4>
+                            <p class="text-gray-500 text-sm mt-1">Cuéntanos qué producto deseas y adjunta imágenes de referencia.</p>
+                        </li>
+                        <li class="relative group">
+                            <div class="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors">3</div>
+                            <h4 class="text-lg font-bold group-hover:text-primary transition-colors">Cotización & Pago</h4>
+                            <p class="text-gray-500 text-sm mt-1">Te enviaremos el presupuesto para comenzar la producción.</p>
+                        </li>
+                    </ul>
+                    <a href="https://wa.me/50374446720" target="_blank" class="inline-block bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-8 rounded-xl shadow-lg flex items-center gap-3 transition-transform hover:-translate-y-1 w-max">
+                        <i class="fab fa-whatsapp text-2xl"></i> Chatear en WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

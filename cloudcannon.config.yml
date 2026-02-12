@@ -1,0 +1,50 @@
+collections_config:
+  products:
+    name: Products
+    path: src/products
+    output: true
+    url: /products/[slug]/
+    _inputs:
+      title:
+        type: text
+        comment: Product Name
+      price:
+        type: number
+      image:
+        type: image
+      category:
+        type: select
+        options:
+          - values: 
+            - Tazas
+            - Camisas
+            - Botellas
+            - Marcos
+            - Gorras
+            - Cajas Sorpresa
+            - Flores
+            - Dulces
+            - Tarjetería
+            - Corporativo
+            - Otros
+      description:
+        type: markdown
+      is_new:
+        type: boolean
+        label: Nuevo
+      is_bestseller:
+        type: boolean
+        label: Más Vendido
+
+items_config:
+  gallery:
+    path: src/_data/gallery.json
+    type: json
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          title: { type: string }
+          category: { type: string }
+          image: { type: image }

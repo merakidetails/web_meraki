@@ -1,0 +1,113 @@
+---
+layout: layout.njk
+title: Tienda - Meraki Gift Store
+---
+
+<div class="flex flex-col min-h-screen" x-data="shopLogic()">
+    <div class="flex flex-1 max-w-7xl mx-auto w-full pt-6 pb-12 px-4 sm:px-6 lg:px-8 gap-8">
+        
+        <!-- Sidebar Filters -->
+        <aside class="hidden lg:block w-64 flex-shrink-0">
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Categorías</h3>
+            <nav class="space-y-2">
+                <template x-for="cat in categories" :key="cat.name">
+                    <button @click="selectedCategory = cat.name" 
+                            class="w-full flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all"
+                            :class="selectedCategory === cat.name ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary/10 hover:text-primary'">
+                        <span class="material-icons mr-3 text-xl" x-text="cat.icon"></span>
+                        <span x-text="cat.name"></span>
+                    </button>
+                </template>
+            </nav>
+            <div class="mt-8 pt-8 border-t border-gray-100 dark:border-white/10">
+                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Filtrar por Precio</h3>
+                <input class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" type="range" min="0" max="100" x-model="maxPrice" />
+                <div class="flex justify-between mt-2 text-xs text-gray-500 font-medium"><span>$0</span><span x-text="'$' + maxPrice"></span></div>
+            </div>
+        </aside>
+
+        <!-- Main Product Grid -->
+        <main class="flex-1">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold">Nuestros Regalos</h1>
+                    <p class="text-sm text-gray-500 mt-1" x-text="`Mostrando ${filteredProducts.length} productos`"></p>
+                </div>
+                <select x-model="sortBy" class="form-select pl-3 pr-10 py-2 border-gray-200 dark:border-white/10 rounded-lg bg-white dark:bg-neutral-dark text-gray-700 dark:text-gray-200 shadow-sm focus:ring-primary">
+                    <option value="popular">Populares</option>
+                    <option value="price_asc">Precio: Bajo a Alto</option>
+                    <option value="price_desc">Precio: Alto a Bajo</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="prod in filteredProducts" :key="prod.id">
+                    <div class="group bg-white dark:bg-neutral-dark rounded-2xl shadow-sm hover:shadow-lg transition-all border border-gray-100 dark:border-white/5 overflow-hidden flex flex-col">
+                        <div class="relative aspect-square overflow-hidden bg-gray-50">
+                            <template x-if="prod.tag">
+                                <span class="absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded shadow-md uppercase"
+                                      :class="prod.tag === 'Nuevo' ? 'bg-yellow-400 text-black' : 'bg-primary text-white'"
+                                      x-text="prod.tag"></span>
+                            </template>
+                            <img :src="prod.img" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" :alt="prod.title" />
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <div class="text-xs text-primary font-semibold mb-1" x-text="prod.category"></div>
+                            <h3 class="font-bold text-lg mb-1 leading-snug" x-text="prod.title"></h3>
+                            <div class="mt-auto flex items-center justify-between">
+                                <span class="text-xl font-bold" x-text="'$' + prod.price.toFixed(2)"></span>
+                                <button @click="addToCart(prod)" class="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <span class="material-icons text-xl">add_shopping_cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    function shopLogic() {
+        return {
+            products: [
+                {% for product in collections.products %}
+                {
+                    id: "{{ product.fileSlug }}",
+                    title: "{{ product.data.title }}",
+                    price: {{ product.data.price }},
+                    img: "{{ product.data.image }}",
+                    category: "{{ product.data.category }}",
+                    tag: "{{ 'Nuevo' if product.data.is_new else ('Más vendido' if product.data.is_bestseller else '') }}"
+                },
+                {% endfor %}
+            ],
+            categories: [
+                { name: "Todos", icon: "grid_view" },
+                { name: "Tazas", icon: "coffee" },
+                { name: "Camisas", icon: "checkroom" },
+                { name: "Botellas", icon: "water_drop" },
+                { name: "Gorras", icon: "sports_baseball" },
+                { name: "Marcos", icon: "image" }
+            ],
+            selectedCategory: 'Todos',
+            maxPrice: 100,
+            sortBy: 'popular',
+
+            get filteredProducts() {
+                let result = this.products.filter(p => {
+                    return (this.selectedCategory === 'Todos' || p.category === this.selectedCategory) &&
+                           p.price <= this.maxPrice;
+                });
+
+                if (this.sortBy === 'price_asc') {
+                    result.sort((a, b) => a.price - b.price);
+                } else if (this.sortBy === 'price_desc') {
+                    result.sort((a, b) => b.price - a.price);
+                }
+                return result;
+            }
+        }
+    }
+</script>

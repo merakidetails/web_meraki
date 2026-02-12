@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es" class="">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Meraki Gift Store - Regalos hechos con amor</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ee2b6c",
+                        "primary-light": "#fff0f5",
+                        "primary-50": "#fdeaf1",
+                        "primary-100": "#fbd5e3",
+                        "primary-hover": "#d61f5c",
+                        "primary-dark": "#c2104c",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221016",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d151d",
+                        "surface-highlight-light": "#fff0f5",
+                        "surface-highlight-dark": "#3a1a25",
+                        "neutral-light": "#fdfbfc", 
+                        "neutral-dark": "#2e1a21", 
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "plusJakartaSans": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem", // rounded-md
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Masonry Support */
+        .columns-1 { column-count: 1; }
+        @media (min-width: 768px) { .md\:columns-2 { column-count: 2; } }
+        @media (min-width: 1024px) { .lg\:columns-3 { column-count: 3; } }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 min-h-screen">
+    <div id="root"></div>
+
+    <!-- React/Babel Scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        // --- Common Components ---
+        const Navbar = ({ cartCount = 2 }) => {
+            const [isDark, setIsDark] = useState(false);
+            const navigate = useNavigate();
+
+            const toggleDarkMode = () => {
+                const doc = document.documentElement;
+                if (doc.classList.contains('dark')) {
+                    doc.classList.remove('dark');
+                    setIsDark(false);
+                } else {
+                    doc.classList.add('dark');
+                    setIsDark(true);
+                }
+            };
+
+            return (
+                <nav className="sticky top-0 z-50 bg-white/80 dark:bg-surface-dark/90 backdrop-blur-md border-b border-primary/10 dark:border-primary/20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between h-20 items-center">
+                            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
+                                <span className="material-icons text-primary text-3xl">favorite</span>
+                                <span className="font-extrabold text-2xl tracking-tight text-gray-900 dark:text-white">Meraki</span>
+                            </div>
+                            <div className="hidden md:flex space-x-8">
+                                <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors font-medium">Inicio</Link>
+                                <Link to="/shop" className="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors font-medium">Tienda</Link>
+                                <Link to="/gallery" className="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors font-medium">Galería</Link>
+                                <Link to="/how-to-order" className="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors font-medium">Cómo Comprar</Link>
+                            </div>
+                            <div className="flex items-center space-x-4">
+                                <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors" onClick={toggleDarkMode}>
+                                    <span className="material-icons">{isDark ? 'light_mode' : 'dark_mode'}</span>
+                                </button>
+                                <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors relative" onClick={() => navigate('/cart')}>
+                                    <span className="material-icons">shopping_bag</span>
+                                    <span className="absolute top-1 right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-primary rounded-full">{cartCount}</span>
+                                </button>
+                                <button className="md:hidden p-2 text-gray-600 dark:text-gray-300">
+                                    <span className="material-icons">menu</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            );
+        };
+
+        const Footer = () => (
+            <footer className="bg-white dark:bg-background-dark pt-16 pb-8 border-t border-gray-100 dark:border-white/5">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                        <div className="col-span-1 md:col-span-1">
+                            <div className="flex items-center gap-2 mb-4">
+                                <span className="material-icons text-primary text-2xl">favorite</span>
+                                <span className="font-extrabold text-xl tracking-tight text-gray-900 dark:text-white">Meraki</span>
+                            </div>
+                            <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                Regalos hechos a mano con dedicación y amor. Hacemos que cada momento especial sea inolvidable.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-gray-900 dark:text-white mb-4">Tienda</h4>
+                            <ul className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+                                <li><Link to="/shop" className="hover:text-primary transition-colors">Novedades</Link></li>
+                                <li><Link to="/shop" className="hover:text-primary transition-colors">Más vendidos</Link></li>
+                                <li><Link to="/custom-flow" className="hover:text-primary transition-colors">Personalizados</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-gray-900 dark:text-white mb-4">Ayuda</h4>
+                            <ul className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+                                <li><Link to="/gallery" className="hover:text-primary transition-colors">Preguntas frecuentes</Link></li>
+                                <li><Link to="/how-to-order" className="hover:text-primary transition-colors">Envíos</Link></li>
+                                <li><a href="#" className="hover:text-primary transition-colors">Contacto</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-gray-900 dark:text-white mb-4">Contacto</h4>
+                            <ul className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+                                <li className="flex items-center gap-2"><span className="material-icons text-base text-primary">email</span> hola@merakistore.com</li>
+                                <li className="flex items-center gap-2"><span className="material-icons text-base text-primary">phone</span> +503 7444 6720</li>
+                                <li className="flex items-center gap-2"><span className="material-icons text-base text-primary">location_on</span> San Salvador, SV</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="border-t border-gray-100 dark:border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                        <p>© 2023 Meraki Gift Store. Todos los derechos reservados.</p>
+                        <p className="text-primary font-medium flex items-center gap-2">Cada regalo está hecho con cariño 💝</p>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        // --- Screen 1: Home Page ---
+        const HomePage = () => {
+            const navigate = useNavigate();
+            return (
+                <div>
+                    <Navbar />
+                    <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background-light to-primary/5 dark:from-background-dark dark:via-background-dark dark:to-primary/10 py-20 lg:py-28">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                            <div className="grid lg:grid-cols-2 gap-12 items-center">
+                                <div className="text-center lg:text-left space-y-8">
+                                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-white dark:bg-white/10 border border-primary/20 text-primary text-sm font-semibold mb-2 shadow-sm">
+                                        <span className="material-icons text-base mr-1">auto_awesome</span> Nuevo: Colección Primavera
+                                    </div>
+                                    <h1 className="text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-[1.1]">
+                                        Regalos únicos <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">hechos con amor</span>
+                                    </h1>
+                                    <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0">
+                                        Sorprende a tus seres queridos con detalles artesanales y personalizados. Cada pieza cuenta una historia creada especialmente para ti.
+                                    </p>
+                                    <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                                        <button onClick={() => navigate('/shop')} className="inline-flex justify-center items-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-white bg-primary hover:bg-primary/90 shadow-lg shadow-primary/30 transition-all hover:-translate-y-1">Comprar ahora</button>
+                                        <button onClick={() => navigate('/custom-flow')} className="inline-flex justify-center items-center px-8 py-4 border-2 border-primary/20 hover:border-primary text-base font-bold rounded-xl text-primary bg-white dark:bg-white/5 hover:bg-primary/5 transition-all">
+                                            <i className="fab fa-whatsapp mr-2 text-xl"></i> Personalizar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="relative lg:block hidden">
+                                    <div className="relative rounded-2xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white dark:border-gray-800">
+                                        <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW6fWNxk4eBaiZCnu08prMg6-c2lcWrVw9hJikSyIPT5GzNE33YNDuYsk3E3mNit87yjlERiuaJZpy9CkNJo0jjd65QmB5bmum-nwCWgkifRY1r19jQ-IUSMu2hosFu5kNwdWcWcRamXdBMheNLiC2X453n5jubHSSmFZ-xa1Xco61cQIjJMUSjqbdyMPRP2D9h2Bf92WHcQHaTWWVQGMwzHk9rEorJRDoI8FEYZY17vC0UehUf9abQTLYp7Q9umcRC2CINDHGSQ" alt="Gift wrapping scene" />
+                                        <div className="absolute bottom-6 left-6 right-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-primary/10 flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary"><span className="material-icons">card_giftcard</span></div>
+                                            <div><h4 className="font-bold text-gray-900 dark:text-white">Cajas Sorpresa</h4><p className="text-sm text-gray-500">Desde $25.00</p></div>
+                                            <button onClick={() => navigate('/shop')} className="ml-auto w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center shadow-md hover:bg-primary/90"><span className="material-icons text-sm">arrow_forward</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    {/* Featured Products Mini */}
+                    <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                         <div className="flex justify-between items-end mb-12">
+                            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Productos Destacados</h2>
+                            <Link to="/shop" className="text-primary font-semibold flex items-center hover:underline">Ver todo <span className="material-icons text-sm ml-1">arrow_forward</span></Link>
+                         </div>
+                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {[
+                                { title: "Taza Artesanal Rosa", price: "$20.00", oldPrice: "$25.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDiOJZRo4JqNIocG8AmMm6oEGq8nh6FCtbqWFs1cdHgCQyzCznM_eTMer2FPG1YFjTLff1u-AodufeNsBfUkhMR4nZqXTYu0p5-Z08XhfQaSpQOKG0GE1I4A9HxM_2O_SbwjCDKV4Qpzr3BzqNr9BG1AHBScZ2YvfGWACNBGMFWDqE1qwKhg095OrZ19fmKmUcMqdJRV3phm7ZAABE98ss78BJvyIWLiw0tsd8IdX1n6Hp1HysSqerISvJVSp2AfTcxLjNKL_vj4w" },
+                                { title: "Kit Spa Relax", price: "$45.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA3qvsp3P2srCYZUz2kDR38Fed1og-O6PVQED7AXgSeNWeHh7WpdCcqnTZVZ9B5G9zW6_fHZfi-Gyo6jYPyvSO7RVEFHTK9kKC4VzKxCXHV1nx8x8rgm37BOH9G7jm9gRaON4qL9RRdbfXuqJ5mW3gLTFlCwRWwANxsj3MPi4aoClbpE59odFafX-AtTS-BMNEBBbCAfN0A-vq3LBUeQZmDoTqxNifRBytxeG8q6cB-xas3et_ep5sR8XsYfYlN6kKTiFe518mf0w" },
+                                { title: "Agenda Meraki 2024", price: "$18.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAH01jSL_c3Ey-t-GiTU8Y2mi244_JIMIDMu0BGgFe02BqweiseRScnwr8vq-IPQuXKuCoGoBtlJM84B4uS5R94NMXzzoF3KZaWTBZjPjWxrwMgJnily5dzH8Vj55vFlrS2JT4_PY4pyDFHp6dJvRkeyfN29CYi87y09JxEKSb2769N2RUeSG5GSfrZo4T9TYR__yAP3CHLs4gXPpQrWErkMnAU_bPwMHoAcmPsZzBnh104MIsEq9GlHfZ9d16AvAcbhJ2IYqbi1Q" },
+                                { title: "Llavero Iniciales", price: "$12.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBQn69qmoZrNqMGJ1-YIbxBAo_YS8ZynaCbgD8KHn8-gUVULVxq96JJLogdq9G8Kde0sAMknzZJfn16BZjJHjx6OpzfxaItEWaoVPGVjTS2WssS2ICs4duGIfzgeeq_hFf48DdEr5UeOpFr82DxaWIrBD8ZbhIWGQQWCsYRPk0e23MfNM04-1QAbNAbu-6IMFri5-8kH2RRe-WTosvHwdGIjXIdfUHq7ZPAfKfVoLDnpwxUjUJ_H4rnAZRvRXNXPCJckhO-j2b8hA" }
+                            ].map((prod, idx) => (
+                                <div key={idx} className="group bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 dark:border-white/10">
+                                    <div className="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800">
+                                        <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={prod.img} alt={prod.title} />
+                                    </div>
+                                    <div className="p-5">
+                                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">{prod.title}</h3>
+                                        <div className="flex items-center justify-between mt-4">
+                                            <span className="text-lg font-bold text-primary">{prod.price}</span>
+                                            <button className="w-10 h-10 rounded-xl bg-primary/10 text-primary hover:bg-primary hover:text-white flex items-center justify-center transition-all">
+                                                <span className="material-icons">add_shopping_cart</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                         </div>
+                    </section>
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- Screen 2: How to Order ---
+        const HowToOrderPage = () => {
+            const [activeTab, setActiveTab] = useState('normal');
+            return (
+                <div>
+                    <Navbar />
+                    <section className="relative py-16 md:py-24 overflow-hidden">
+                        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+                            <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4 uppercase tracking-wider">Guía de Compra</span>
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 leading-tight">¿Cómo realizar tu pedido?</h1>
+                            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                                En Meraki queremos que tu experiencia sea mágica. Elige si prefieres un producto de nuestro catálogo o algo 100% personalizado para ti.
+                            </p>
+                        </div>
+                    </section>
+                    <main className="pb-24 px-4 sm:px-6 lg:px-8">
+                        <div className="max-w-6xl mx-auto">
+                            <div className="flex justify-center mb-16">
+                                <div className="inline-flex bg-white dark:bg-surface-dark p-1.5 rounded-xl shadow-lg border border-gray-100 dark:border-gray-800 relative">
+                                    <div className={`absolute h-[calc(100%-0.75rem)] w-[calc(50%-0.375rem)] bg-primary rounded-lg transition-all duration-300 ease-in-out shadow-md ${activeTab === 'custom' ? 'translate-x-full ml-[-0.375rem]' : ''}`} style={{left: '0.375rem', top: '0.375rem'}}></div>
+                                    <button onClick={() => setActiveTab('normal')} className={`relative z-10 px-8 py-3 font-bold rounded-lg transition-colors w-48 flex items-center justify-center gap-2 ${activeTab === 'normal' ? 'text-white' : 'text-gray-500'}`}>
+                                        <span className="material-icons-round">storefront</span> Pedido Normal
+                                    </button>
+                                    <button onClick={() => setActiveTab('custom')} className={`relative z-10 px-8 py-3 font-bold rounded-lg transition-colors w-48 flex items-center justify-center gap-2 ${activeTab === 'custom' ? 'text-white' : 'text-gray-500'}`}>
+                                        <span className="material-icons-round">edit</span> Personalizado
+                                    </button>
+                                </div>
+                            </div>
+
+                            {activeTab === 'normal' ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                    {[
+                                        { id: 1, icon: 'search', title: 'Explora', text: 'Navega por nuestro catálogo lleno de detalles únicos.' },
+                                        { id: 2, icon: 'shopping_cart', title: 'Añade al Carrito', text: 'Selecciona tus favoritos y agrégalos a tu carrito de compras.' },
+                                        { id: 3, icon: 'credit_card', title: 'Pago Seguro', text: 'Ingresa tus datos y realiza el pago de forma segura.' },
+                                        { id: 4, icon: 'sentiment_satisfied_alt', title: '¡Recibe y Disfruta!', text: 'Procesaremos tu pedido con mucho cariño.' }
+                                    ].map(step => (
+                                        <div key={step.id} className="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all text-center">
+                                            <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6 mx-auto relative border-4 border-white dark:border-surface-dark">
+                                                <span className="material-icons-round text-3xl">{step.icon}</span>
+                                                <div className="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full text-xs font-bold flex items-center justify-center">{step.id}</div>
+                                            </div>
+                                            <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                                            <p className="text-gray-500 text-sm leading-relaxed">{step.text}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="bg-white dark:bg-surface-dark rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 dark:border-gray-800 flex flex-col lg:flex-row gap-12 items-center">
+                                    <div className="w-full lg:w-1/2 rounded-2xl overflow-hidden aspect-video lg:aspect-square">
+                                        <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9Vz3nht1V8msaExEQ-ORYnyYqQxPLQrY4gjsH68hhyoDNfwV0QSkzVsz2NbbdBsAr0_PSVpUxjK_DDVvFVuigivQNe5aU3bCq20KG6MRBP7JMpKy216-1q2RFPXdkd1JdCXYIWhB4r4PxBSr1vauoO8RVbUoJ9vHpFuopcijwLjE31SYaZLstv0wrUK6gMbwNyqEyNURyNvT6b6J570i2eIWTJggGXd4iB6UIdw-TEvrHbci2RL3-OTxAanr1_KKRlluJvweKsA" alt="Custom process" />
+                                    </div>
+                                    <div className="w-full lg:w-1/2 space-y-8">
+                                        <h3 className="text-2xl font-bold">Proceso Creativo</h3>
+                                        <ul className="space-y-6 relative border-l-2 border-gray-100 dark:border-gray-700 pl-8 ml-6">
+                                            {[
+                                                { id: 1, title: 'Contáctanos', text: 'Haz clic en el botón de WhatsApp para iniciar una conversación.' },
+                                                { id: 2, title: 'Detalles & Referencias', text: 'Cuéntanos qué producto deseas y adjunta imágenes de referencia.' },
+                                                { id: 3, title: 'Cotización & Pago', text: 'Te enviaremos el presupuesto para comenzar la producción.' }
+                                            ].map(step => (
+                                                <li key={step.id} className="relative group">
+                                                    <div className="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors">{step.id}</div>
+                                                    <h4 className="text-lg font-bold group-hover:text-primary transition-colors">{step.title}</h4>
+                                                    <p className="text-gray-500 text-sm mt-1">{step.text}</p>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <button className="bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-8 rounded-xl shadow-lg flex items-center gap-3 transition-transform hover:-translate-y-1">
+                                            <i className="fab fa-whatsapp text-2xl"></i> Chatear en WhatsApp
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- Screen 3: Custom Flow ---
+        const CustomFlowPage = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="selection:bg-primary selection:text-white">
+                    <Navbar />
+                    <main className="relative overflow-hidden">
+                        <section className="max-w-5xl mx-auto px-4 pt-16 pb-12 text-center">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-gray-800 shadow-sm border border-primary/20 mb-8">
+                                <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                                <span className="text-sm font-semibold text-primary uppercase tracking-wider">Custom Process</span>
+                            </div>
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6">
+                                Create Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-rose-400">Unique</span>
+                            </h1>
+                            <p className="max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400 leading-relaxed">
+                                Personalizing your handmade gift is a conversation, not a form. Chat directly with our artisans to bring your vision to life perfectly.
+                            </p>
+                        </section>
+
+                        <section className="max-w-7xl mx-auto px-4 py-12">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                {[
+                                    { icon: 'touch_app', title: 'Elegir producto', text: 'Explora nuestra tienda y selecciona la base perfecta.', num: 1 },
+                                    { icon: 'add_photo_alternate', title: 'Enviar imagen', text: 'Comparte tus fotos o ideas directamente en el chat.', num: 2 },
+                                    { icon: 'verified', title: 'Confirmar diseño', text: 'Recibe una vista previa digital y aprueba el diseño.', num: 3 },
+                                    { icon: 'local_shipping', title: 'Pago y entrega', text: 'Completa el pago seguro y recibe tu creación.', num: 4 }
+                                ].map((step, i) => (
+                                    <div key={i} className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-primary/10 flex flex-col items-center text-center relative group">
+                                        <div className="h-24 w-24 rounded-full bg-primary-light dark:bg-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                            <span className="material-icons-round text-4xl text-primary">{step.icon}</span>
+                                        </div>
+                                        <div className="absolute top-4 right-4 h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-md">{step.num}</div>
+                                        <h3 className="text-xl font-bold mb-2">{step.title}</h3>
+                                        <p className="text-gray-500 text-sm">{step.text}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="max-w-4xl mx-auto px-4 py-16">
+                            <div className="bg-gradient-to-br from-white to-primary-light/30 dark:from-gray-800 dark:to-gray-900 rounded-3xl p-8 md:p-12 shadow-xl border border-primary/10 grid md:grid-cols-2 gap-12 items-center relative z-10">
+                                <div>
+                                    <h2 className="text-3xl font-bold mb-4">¿Listos para empezar?</h2>
+                                    <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">Al hacer clic en el botón, se abrirá WhatsApp con un mensaje pre-escrito para iniciar tu pedido. ¡Nos encanta escuchar tus ideas!</p>
+                                    <button className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-lg font-bold py-4 px-8 rounded-full shadow-lg flex items-center justify-center gap-3 transform hover:-translate-y-0.5 transition-all">
+                                        <i className="fab fa-whatsapp text-2xl"></i> Personalizar por WhatsApp
+                                    </button>
+                                </div>
+                                <div className="bg-[#E5DDD5] dark:bg-[#1a1a1a] p-4 rounded-2xl shadow-inner border border-gray-200 dark:border-gray-700 transform rotate-2 hover:rotate-0 transition-transform">
+                                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-300 dark:border-gray-700">
+                                        <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-white"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP4Im1MlWeChj_hX65w3JSTuxcTfyH1z0Y_6urQV-0n1a_x-Lu4JDXCcIdlWqXARHCyGNG-An4Nct-ZzWAAZqWPwuYhesvUYE-7WV3DiLI6lc8ysSjiKbWmnLHr_R4XGltzA-RBYaldL_-YBE_4K7ePrs5hX_AEyeD5QuYRTGnCcBeUU_agIMle2cn6hHwvNbQ_39Occw6LrqL131hGEH1AAY9cpDVvlb7kF6Sq3LIrp_OVKHWyXK9MERmLSAYbgKTDfavPY7OAQ" className="object-cover h-full w-full" /></div>
+                                        <div><div className="font-bold text-sm">Meraki Gift Store</div><div className="text-xs text-primary font-medium">En línea</div></div>
+                                    </div>
+                                    <div className="bg-white dark:bg-gray-800 rounded-r-lg rounded-bl-lg p-3 max-w-[85%] shadow-sm mb-4">
+                                        <p className="text-sm">¡Hola! 👋 Estamos listos para crear algo especial para ti.</p>
+                                    </div>
+                                    <div className="bg-[#DCF8C6] dark:bg-primary/20 rounded-l-lg rounded-br-lg p-3 shadow-md border-2 border-primary border-dashed">
+                                        <p className="text-sm font-medium">Hola Meraki! Me interesa personalizar el Set de Regalo Floral. Tengo una imagen que me gustaría usar...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- Screen 4: Shop Catalog ---
+        const ShopPage = () => {
+            const navigate = useNavigate();
+            const categories = ["Todos", "Tazas", "Camisas", "Botellas", "Gorras", "Marcos"];
+            const products = [
+                { id: 1, tag: "Más vendido", cat: "Tazas", title: "Taza 'Good Vibes'", price: "$15.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCxJvGGLmvgERADIoADA_bDIuPDr-lwJnl0yhlocHuX4QRZE6Iz92H77NVy9vMAX6SXpS0LsR9WRNXCqqRlOkUA_U02EKlwrnDqINv2qsMfbN2UJ8ddkyOShv3wbCaoyEwNodajeQgtcGDCZ9Qx_oDjK9k2aZBnUNCunNhxMdVlVXUrQBkD2BwGPXe8yYXTo0_icyNeoBBPBQSSV3QbU_vaIXX4mmvpOkv_ah1DO7w-IrZ8-nR0jxnJZPGdF16fxAdU_BuVbYpoCw" },
+                { id: 2, cat: "Camisas", title: "Camisa Meraki Logo", price: "$25.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuADvV-p-wS2OA3RhZOdAk41IpY6hd54TrPdcdx1lq7d2umNe-Oi4oWmzPQgdml5KJ4ghACLDxvIjZ9Nl5uZfriQ4s52BwOvB0-8LNQdIwmBylaNpJV_F8nwBbElvXq9iJP9bxkT1RC-cvtbIjU3Znh1SM8yi44NFD_-ZaMEylENEfGb3U_zSKfWhgQ-Yo9Vc_h07de45zXAgr9wwVc30lBIySqQktVm15zOdLkiJRO5Kl73tDlw6smqfho87uWRRqS0FBBLSKFyng" },
+                { id: 3, cat: "Botellas", title: "Botella Térmica Pastel", price: "$18.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjhert9VPHDkLlRtk3tfJBWZPS7YK3rKIRUsztGw2wnIO_0J6ktpLjdvFvSiH5wcZMJ65q5E1LcyHluRTWieS_5QWYatUgPD05tkFJzOuxZSiESjci6tN0_oFGor8Ey7ZMlnHY6vV9SiviUwAvETCUYZEBS97PxTjBOpj9-WO7m03NdN1vy019KdYGLtzvuAxPW-pqs72lrmRYpGD-_lXOW6oVuJQfLYcO25YuoS4h-EFcU3sW-BPlfOst3W6U76blf4W0srQUA" },
+                { id: 4, tag: "Nuevo", cat: "Marcos", title: "Marco Minimalista", price: "$12.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDwXzNEyFvYs9SLWZf80PEPne0Hx02dthB-WSA4OUFvAnDkAhJEpJXJyaBTYF2vYH53dYRG-X3Efa0bk2-Et3FQJ-HBhxGGgLexuRVc2uEAASpFeDjruHXllmQxiyI0etckxT90KjicUy4GLOqDmzzkPzA0uKGF9zH6CNoiimeevwkSOqAKpHeYYNj5dWt9TLmcoUjkMIX8zlyRYBI9AFH8U0E6Pg2bRQ9LNMmFxxSr9QSmgG_IPgJEC0C9XxjLnc8XkQeGAEDj1A" },
+                { id: 5, tag: "Más vendido", cat: "Gorras", title: "Gorra Floral", price: "$22.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBu3pz2eVbECAddKc1MDC-zlbwNCdaHZxLkbfLa2P0fdVY35bqwaQUadqfIvTrj11SoMoVH5CExcepw5lbphC1UDyU9_8LYolmsSumdGn07kmAwT_oW9yZ7pua3o9m9v_0n577t7B2cerV43ScnHNMa76wXllsnOTQXumwPp_rizgb31PYhLNa8JHMNSLQRUICRllQM2bbzUZiOSzC2EsO3pko94tGMmFu7rGaScQyZ9GFoNbqf2qbIQQSAmXrPqNNpVXGLkA8fkg" },
+                { id: 6, cat: "Otros", title: "Set Tarjetas Regalo", price: "$8.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBWoweVJA-SWhp1sJcFYf90yQztbs99VnnfYPKdTc0F1n3BuksHg62mplJxW0XeP3dBjO1wJx7Re42P7gnzDoerWMCcoXF-73ZyC8heBKN6tXHERwv4QjWpjSOOg4d0SR3zcTKkYMxDtXEgq9UKG1xP3LDorbkMOtR2IZWyme4Bpn8voUlWKZHv04jBphT_JIzJdYjk80xHIYJbTYnhs0BRLfYZu1SOBsDwfMTcn0W155ExSjZn4pCdiFxEkx3RhEXUXStIxw-m5Q" }
+            ];
+
+            return (
+                <div className="flex flex-col min-h-screen">
+                    <Navbar />
+                    <div className="flex flex-1 max-w-7xl mx-auto w-full pt-6 pb-12 px-4 sm:px-6 lg:px-8 gap-8">
+                        <aside className="hidden lg:block w-64 flex-shrink-0">
+                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Categorías</h3>
+                            <nav className="space-y-2">
+                                {categories.map((cat, i) => (
+                                    <button key={i} className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all ${i === 0 ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary/10 hover:text-primary'}`}>
+                                        <span className="material-icons mr-3 text-xl">{i === 0 ? 'grid_view' : (i===1 ? 'coffee' : (i===2 ? 'checkroom' : (i===3 ? 'water_drop' : (i===4 ? 'sports_baseball' : 'image'))))}</span>
+                                        {cat}
+                                    </button>
+                                ))}
+                            </nav>
+                            <div className="mt-8 pt-8 border-t border-gray-100 dark:border-white/10">
+                                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Filtrar por Precio</h3>
+                                <input className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" type="range" />
+                                <div className="flex justify-between mt-2 text-xs text-gray-500 font-medium"><span>$0</span><span>$100+</span></div>
+                            </div>
+                        </aside>
+                        <main className="flex-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                                <div><h1 className="text-2xl font-bold">Nuestros Regalos</h1><p className="text-sm text-gray-500 mt-1">Mostrando {products.length} productos</p></div>
+                                <select className="form-select pl-3 pr-10 py-2 border-gray-200 dark:border-white/10 rounded-lg bg-white dark:bg-neutral-dark text-gray-700 dark:text-gray-200 shadow-sm focus:ring-primary">
+                                    <option>Populares</option><option>Precio: Bajo a Alto</option><option>Precio: Alto a Bajo</option>
+                                </select>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {products.map(prod => (
+                                    <div key={prod.id} className="group bg-white dark:bg-neutral-dark rounded-2xl shadow-sm hover:shadow-lg transition-all border border-gray-100 dark:border-white/5 overflow-hidden flex flex-col">
+                                        <div className="relative aspect-square overflow-hidden bg-gray-50">
+                                            {prod.tag && <span className={`absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded shadow-md uppercase ${prod.tag === 'Nuevo' ? 'bg-yellow-400 text-black' : 'bg-primary text-white'}`}>{prod.tag}</span>}
+                                            <button className="absolute top-3 right-3 z-10 p-2 bg-white/90 rounded-full text-gray-400 hover:text-primary opacity-0 group-hover:opacity-100 transition-all"><span className="material-icons text-lg">favorite_border</span></button>
+                                            <img src={prod.img} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={prod.title} />
+                                        </div>
+                                        <div className="p-5 flex flex-col flex-1">
+                                            <div className="text-xs text-primary font-semibold mb-1">{prod.cat}</div>
+                                            <h3 className="font-bold text-lg mb-1 leading-snug">{prod.title}</h3>
+                                            <div className="mt-auto flex items-center justify-between">
+                                                <span className="text-xl font-bold">{prod.price}</span>
+                                                <button onClick={() => navigate('/cart')} className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors"><span className="material-icons text-xl">add_shopping_cart</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </main>
+                    </div>
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- Screen 5: Gallery & FAQ ---
+        const GalleryPage = () => {
+            const gallery = [
+                { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDApjEAIKkpsWieGbcc_vBBdonGoERx1jOOws0CMVmEcjPxuYgIivk3pEgkLOjcdaVeTaYCgnHUXJdjV7XvFtDEPH2En6RxrpgmPu3hnk-Nw6f3aTHgn4H0Z2_k3j64_oingWfhHGMsiZaPG6Jmgbq0ja-KXUVhejVE4O24OUK89d-bLEPs814pbiKh6UBF3bUAx5Ob_OZUMYjm3D_sH9r-NikZl-SifRYkPV0OpybFl3TGdoUz88AXY8Ab7gZ8tXG22huX0XXLow", cat: "Cajas Sorpresa", title: "Edición San Valentín" },
+                { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMQzKlCl4nJECFZXY5XKV8AOu_JW6zQWCsY54EPVPEnreZ8dp8NuJTIEmWxn5BVGBNzPpgDBZiFwA7fMa3m1XHsWSkwWDs4jecSUUlN3CdBa3dxhzxPOmd6aNZQxYY-_O8z03V4syY8RD4uOb3eCcaFqfDUNABKlWm7KdUsL-YS6lYJv8BvAdpv6SC_cxez2iySXf_RJSbO4iREArERbsyaMcuCv8uGnLIfwJEUpZfTfYJJPeT9MzN9Vq1-xBatdU7eGiY9FS3Sw", cat: "Tazas", title: "Personalizado Floral" },
+                { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCNQA-qbd5GZTOSzJg4jHjwageWyO-EdPW1ZFUDIj0CA21RZmhe_O2H6aLVE0lG5Vgj_sfAD0O8un0NxrR4vtFs--AOq-J2zpTqvDsCGem2vUjguYTYHh-7gooOdzG_bJtmnfrSLcSGiYNhRTiJhaLh84NKjcLaHOmM8X_ZavV3njBLwqiUCzGpPX3tdatQNvIfrUlyjpw91yMQ_HCsNkp0Wp8Tk7BCLLTs0XJH1Os5u9kUcUmKPK8r3Vxyf6SSSW5uENr_lsDSkQ", cat: "Dulces", title: "Macarons Pastel" },
+                { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAkoSIQgaKNA7kekMWm0hv89FWEB3-UZn1wiC0AwfaCHIo3X8nWqNrB_fQPpy7uni3hT9J53w2WQev7-ULWh8_nCc-nGByOryfSyr5COcoWTZh7NaYX_MaOByovMQR3KnPRPwJxqDnL7hCeJmFA5CuNyzheG9A86S5lwZsrs1u56qaOQvcMdL8wSNK1mDDpcTAIpIZ5v_epDx9vraepDLFadxx1Q2zRidWpjqJqbAR0-d4QqcCgYhHqRWttScnwwkCzuc17f8Y3Ww", cat: "Tarjetería", title: "Invitaciones Rústicas" },
+                { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBsUC9sRXuS6iv-nnUZ-SHA5qCIJP6RVVbs4mrfX3FOcF0STvOFnpN08GAiLhqXIW_PMSIK3ZfLV5HKLP0YQbYMLPre7BEYP-ZbgwkqxI0gbtpu738Xlp8VfOP2KwvW53t1Drp3h21fNJdj6hG_A0nv0lGqgCMN-b1rOtfplucz6b8vyKVaDGo6falUX2Rwlsdspj37wBgT1yi9-IZEf2-KyTJbRMVI8RCXIiDZA1zDztcEwPVZioSd1lOEcLQdLoRHfVwsHChObg", cat: "Flores", title: "Ramo Primaveral" },
+                { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCQNxzPkU4flOh0DLC5l_ZEBFwohKUf_F9UtZQl4OC_eR4OggpyA7MQRvesDl2l8KK0A7yM6lB3DA6vmAq37XTLivbuWeYhQsCfeMdnPUsvmY9mS32OIyKn3Y3F6-xh4HQMW7H3vfiXKFn-TbAwfZhP3SFi1h6LtTRic7uG3bdVIi_YKy7eXHxcREaw2rmKiKZAnIzpw2faLXJeb1Zx2CuQpm4yLbpJyaUfs40xuyW9rRiH8G1iV1pjlZ2sCo8TZT7ImMa2dr0Dyw", cat: "Corporativo", title: "Kits de Bienvenida" }
+            ];
+
+            return (
+                <div>
+                    <Navbar />
+                    <header className="relative py-20 overflow-hidden text-center">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary-light via-transparent to-transparent pointer-events-none -z-10"></div>
+                        <h1 className="text-4xl md:text-5xl font-extrabold mb-6">
+                            <span className="text-primary block text-lg font-bold uppercase tracking-widest mb-2">Nuestro Portafolio</span>
+                            Galería de trabajos anteriores
+                        </h1>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">Descubre la magia de los detalles hechos a mano. Cada pieza es única, creada con pasión.</p>
+                    </header>
+
+                    <section className="pb-24 px-4 sm:px-6 lg:px-8">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="flex flex-wrap justify-center gap-4 mb-12">
+                                <button className="px-6 py-2 bg-primary text-white rounded-full font-medium">Todos</button>
+                                <button className="px-6 py-2 bg-white dark:bg-surface-dark border rounded-full font-medium">Cajas de Regalo</button>
+                                <button className="px-6 py-2 bg-white dark:bg-surface-dark border rounded-full font-medium">Tazas</button>
+                            </div>
+                            <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                                {gallery.map((item, i) => (
+                                    <div key={i} className="break-inside-avoid group relative rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer">
+                                        <img className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src={item.img} alt={item.title} />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+                                            <span className="text-primary-light text-sm font-bold uppercase mb-1">{item.cat}</span>
+                                            <h3 className="text-white text-xl font-bold">{item.title}</h3>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="bg-white dark:bg-surface-dark py-20 px-4 sm:px-6 lg:px-8">
+                        <div className="max-w-3xl mx-auto">
+                            <div className="text-center mb-16">
+                                <h2 className="text-3xl font-bold mb-4">Preguntas frecuentes</h2>
+                                <p className="text-gray-600">Todo lo que necesitas saber sobre envíos, pagos y personalizaciones.</p>
+                            </div>
+                            <div className="space-y-4">
+                                {[
+                                    { q: "¿Cuánto tiempo toma un pedido personalizado?", a: "Generalmente toma entre 3 a 5 días hábiles dependiendo de la complejidad." },
+                                    { q: "¿Hacen envíos a todo El Salvador?", a: "¡Sí! Realizamos envíos a los 14 departamentos de El Salvador." },
+                                    { q: "¿Cuáles son los métodos de pago?", a: "Aceptamos transferencias bancarias, Tigo Money, Chivo Wallet y tarjetas de crédito." }
+                                ].map((faq, i) => (
+                                    <details key={i} className="group bg-background-light dark:bg-background-dark rounded-xl border border-gray-100 dark:border-gray-800 open:border-primary/30 transition-all">
+                                        <summary className="flex justify-between items-center cursor-pointer p-6 list-none font-bold text-lg group-hover:text-primary transition-colors">
+                                            {faq.q} <span className="material-icons text-gray-400 group-open:rotate-180 transition-transform">expand_more</span>
+                                        </summary>
+                                        <div className="px-6 pb-6 text-gray-600 leading-relaxed border-t dark:border-gray-800 pt-4"><p>{faq.a}</p></div>
+                                    </details>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- Screen 6: Shopping Cart ---
+        const CartPage = () => {
+            const navigate = useNavigate();
+            const items = [
+                { id: 1, title: 'Taza de Cerámica "Amanecer"', sub: 'Color: Rosa Pastel • Tamaño: Grande', price: 28.00, qty: 1, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCS5OJxIz2kyEVmRzdFzPBx30-_6ChJYAhjcAtAMhMYXwlzcAOyf5-bkNl-oAjJnEoIsn20AWVEr-yzrj_KsEjYdRgNQIB1r0RAI23aD4chi5jvE-wS-FtzGYrKsYBSlDGEeKg273VpxzKw8F9hNHZWD4VLgomRuzpNbv7iO4_xeEJsi7843pNkKnK9vYS90euhXxGXcVAFKh4tFhtrwuZHmN_ImlPJJCvXK5xT4LWgK5aqNBiBs-cCG3-H1JmMa0R_xOc80px5_g" },
+                { id: 2, title: 'Vela Aromática de Lavanda', sub: 'Aroma: Lavanda y Vainilla • 250g', price: 30.00, old: 36.00, qty: 2, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAs4snM8i5bv_xqk9jog8J9QgQFesQ95xb_dCkufkk_hrwUA0Wt5PigfczeoEB68yFIQCH3ouLdsmfab4YfsAy4idRkWT8BAxm4qOnfRjA5exGeE4M6Cv786mkifBRw_jj3cE0qABTVYeLxgk_Rtf1eo4XCBZxjsAYa6q3EAJr2lm-Vk6TZjP9ITay93jlE-r2mlcLVmhCrXfNJKq5HwyQRFSeTwxE4Q5s5Pb_3MlUAH9ac-FhrwhOFjtanf2egILYoJw6AsSLmeQ" },
+                { id: 3, title: 'Colgante de Macramé', sub: 'Estilo: Boho Chic • Color: Crudo', price: 45.00, qty: 1, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBe1GD-fRdmi04WYcCEbVborDkHAhyAtq2YGw1gyO97bAGJ3vV0Hgmz31GQ4Df5dA00OJK2NHPMajbgJRDwNzgBtTnPU9uH8If_wwAHkRmMwGQryxy3He4qouC2RtwT3FQRRHqW7aTqDY5LEp-KnKHTnWca1IleguK6qhMUhGwOTzFHV9-AgO3A7tCZkQCGnyl66z1g6h7YZuN3KvrybDqYd6xy9UN-31WCu5tczbUfrOtqqWXBM6ZhvzE4Ca9M0ycvwEd9IXSIMw" }
+            ];
+
+            return (
+                <div className="min-h-screen flex flex-col">
+                    <Navbar cartCount={3} />
+                    <main className="flex-grow max-w-7xl mx-auto px-4 py-10 w-full">
+                        <nav className="flex mb-8 text-sm text-slate-500">
+                            <Link to="/" className="hover:text-primary">Inicio</Link><span className="mx-2">/</span><span className="font-medium text-slate-800 dark:text-slate-200">Carrito</span>
+                        </nav>
+                        <h1 className="text-3xl font-bold mb-8">Tu Carrito de Compras</h1>
+                        <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-start">
+                            <div className="lg:col-span-8 space-y-6">
+                                {items.map(item => (
+                                    <div key={item.id} className="bg-surface-light dark:bg-surface-dark rounded-xl p-4 sm:p-6 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col sm:row gap-6 hover:shadow-md transition-all">
+                                        <div className="w-full sm:w-32 h-32 flex-shrink-0 bg-slate-100 rounded-lg overflow-hidden">
+                                            <img className="w-full h-full object-cover" src={item.img} alt={item.title} />
+                                        </div>
+                                        <div className="flex-1 flex flex-col justify-between">
+                                            <div className="flex justify-between items-start">
+                                                <div><h3 className="text-lg font-semibold">{item.title}</h3><p className="text-sm text-slate-500 mt-1">{item.sub}</p></div>
+                                                <button className="text-slate-400 hover:text-red-500 p-1"><span className="material-icons">delete_outline</span></button>
+                                            </div>
+                                            <div className="mt-4 flex justify-between items-end">
+                                                <div className="flex items-center border border-slate-200 dark:border-slate-700 rounded-lg">
+                                                    <button className="px-3 py-1">-</button><span className="px-3 py-1 font-medium min-w-[2rem] text-center border-x">{item.qty}</span><button className="px-3 py-1">+</button>
+                                                </div>
+                                                <div className="text-right">
+                                                    <span className="text-xl font-bold text-primary">${item.price.toFixed(2)}</span>
+                                                    {item.old && <span className="block text-xs text-slate-400 line-through">${item.old.toFixed(2)}</span>}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="lg:col-span-4 mt-8 lg:mt-0">
+                                <div className="bg-surface-highlight-light dark:bg-surface-dark rounded-xl p-6 shadow-lg border border-primary/10 sticky top-24">
+                                    <h2 className="text-xl font-bold mb-6 pb-4 border-b">Resumen del Pedido</h2>
+                                    <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                                        <div className="flex justify-between"><span>Subtotal</span><span className="font-semibold text-slate-900 dark:text-white">$103.00</span></div>
+                                        <div className="flex justify-between"><span>Envío estimado</span><span className="font-semibold text-slate-900 dark:text-white">$5.00</span></div>
+                                        <div className="flex justify-between text-green-600"><span>Descuento</span><span>-$6.00</span></div>
+                                    </div>
+                                    <div className="mt-6 pt-6 border-t flex justify-between items-center">
+                                        <span className="text-lg font-bold">Total</span>
+                                        <div className="text-right"><span className="text-2xl font-extrabold text-primary">$102.00</span></div>
+                                    </div>
+                                    <button onClick={() => navigate('/')} className="w-full mt-8 bg-primary hover:bg-primary-hover text-white py-4 px-6 rounded-xl font-bold shadow-lg transition-transform hover:-translate-y-0.5">Finalizar compra</button>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- App Component with MemoryRouter ---
+        const App = () => {
+            const location = useLocation();
+
+            // Scroll to top on every route change
+            useEffect(() => {
+                window.scrollTo(0, 0);
+            }, [location]);
+
+            return (
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/shop" element={<ShopPage />} />
+                    <Route path="/how-to-order" element={<HowToOrderPage />} />
+                    <Route path="/custom-flow" element={<CustomFlowPage />} />
+                    <Route path="/gallery" element={<GalleryPage />} />
+                    <Route path="/cart" element={<CartPage />} />
+                </Routes>
+            );
+        };
+
+        const rootElement = document.getElementById('root');
+        const root = createRoot(rootElement);
+        root.render(
+            <MemoryRouter>
+                <App />
+            </MemoryRouter>
+        );
+    </script>
+</body>
+</html>

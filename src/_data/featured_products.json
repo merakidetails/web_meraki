@@ -1,0 +1,31 @@
+[
+    {
+        "id": 1,
+        "title": "Taza Artesanal Rosa",
+        "price": "$20.00",
+        "priceNum": 20.00,
+        "oldPrice": "$25.00",
+        "img": "https://lh3.googleusercontent.com/aida-public/AB6AXuDiOJZRo4JqNIocG8AmMm6oEGq8nh6FCtbqWFs1cdHgCQyzCznM_eTMer2FPG1YFjTLff1u-AodufeNsBfUkhMR4nZqXTYu0p5-Z08XhfQaSpQOKG0GE1I4A9HxM_2O_SbwjCDKV4Qpzr3BzqNr9BG1AHBScZ2YvfGWACNBGMFWDqE1qwKhg095OrZ19fmKmUcMqdJRV3phm7ZAABE98ss78BJvyIWLiw0tsd8IdX1n6Hp1HysSqerISvJVSp2AfTcxLjNKL_vj4w"
+    },
+    {
+        "id": 2,
+        "title": "Kit Spa Relax",
+        "price": "$45.00",
+        "priceNum": 45.00,
+        "img": "https://lh3.googleusercontent.com/aida-public/AB6AXuA3qvsp3P2srCYZUz2kDR38Fed1og-O6PVQED7AXgSeNWeHh7WpdCcqnTZVZ9B5G9zW6_fHZfi-Gyo6jYPyvSO7RVEFHTK9kKC4VzKxCXHV1nx8x8rgm37BOH9G7jm9gRaON4qL9RRdbfXuqJ5mW3gLTFlCwRWwANxsj3MPi4aoClbpE59odFafX-AtTS-BMNEBBbCAfN0A-vq3LBUeQZmDoTqxNifRBytxeG8q6cB-xas3et_ep5sR8XsYfYlN6kKTiFe518mf0w"
+    },
+    {
+        "id": 3,
+        "title": "Agenda Meraki 2024",
+        "price": "$18.00",
+        "priceNum": 18.00,
+        "img": "https://lh3.googleusercontent.com/aida-public/AB6AXuAH01jSL_c3Ey-t-GiTU8Y2mi244_JIMIDMu0BGgFe02BqweiseRScnwr8vq-IPQuXKuCoGoBtlJM84B4uS5R94NMXzzoF3KZaWTBZjPjWxrwMgJnily5dzH8Vj55vFlrS2JT4_PY4pyDFHp6dJvRkeyfN29CYi87y09JxEKSb2769N2RUeSG5GSfrZo4T9TYR__yAP3CHLs4gXPpQrWErkMnAU_bPwMHoAcmPsZzBnh104MIsEq9GlHfZ9d16AvAcbhJ2IYqbi1Q"
+    },
+    {
+        "id": 4,
+        "title": "Llavero Iniciales",
+        "price": "$12.00",
+        "priceNum": 12.00,
+        "img": "https://lh3.googleusercontent.com/aida-public/AB6AXuBQn69qmoZrNqMGJ1-YIbxBAo_YS8ZynaCbgD8KHn8-gUVULVxq96JJLogdq9G8Kde0sAMknzZJfn16BZjJHjx6OpzfxaItEWaoVPGVjTS2WssS2ICs4duGIfzgeeq_hFf48DdEr5UeOpFr82DxaWIrBD8ZbhIWGQQWCsYRPk0e23MfNM04-1QAbNAbu-6IMFri5-8kH2RRe-WTosvHwdGIjXIdfUHq7ZPAfKfVoLDnpwxUjUJ_H4rnAZRvRXNXPCJckhO-j2b8hA"
+    }
+]

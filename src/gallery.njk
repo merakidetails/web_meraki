@@ -1,0 +1,63 @@
+---
+layout: layout.njk
+title: Galería - Meraki Gift Store
+---
+
+<header class="relative py-20 overflow-hidden text-center">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-light via-transparent to-transparent pointer-events-none -z-10"></div>
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
+        <span class="text-primary block text-lg font-bold uppercase tracking-widest mb-2">Nuestro Portafolio</span>
+        Galería de trabajos anteriores
+    </h1>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Descubre la magia de los detalles hechos a mano. Cada pieza es única, creada con pasión.</p>
+</header>
+
+<section class="pb-24 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <button class="px-6 py-2 bg-primary text-white rounded-full font-medium">Todos</button>
+            <button class="px-6 py-2 bg-white dark:bg-surface-dark border rounded-full font-medium">Cajas de Regalo</button>
+            <button class="px-6 py-2 bg-white dark:bg-surface-dark border rounded-full font-medium">Tazas</button>
+        </div>
+        <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+            {% for item in gallery %}
+            <div class="break-inside-avoid group relative rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer">
+                <img class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src="{{ item.img }}" alt="{{ item.title }}" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+                    <span class="text-primary-light text-sm font-bold uppercase mb-1">{{ item.cat }}</span>
+                    <h3 class="text-white text-xl font-bold">{{ item.title }}</h3>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="bg-white dark:bg-surface-dark py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Preguntas frecuentes</h2>
+            <p class="text-gray-600">Todo lo que necesitas saber sobre envíos, pagos y personalizaciones.</p>
+        </div>
+        <div class="space-y-4">
+            <details class="group bg-background-light dark:bg-background-dark rounded-xl border border-gray-100 dark:border-gray-800 open:border-primary/30 transition-all">
+                <summary class="flex justify-between items-center cursor-pointer p-6 list-none font-bold text-lg group-hover:text-primary transition-colors">
+                    ¿Cuánto tiempo toma un pedido personalizado? <span class="material-icons text-gray-400 group-open:rotate-180 transition-transform">expand_more</span>
+                </summary>
+                <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t dark:border-gray-800 pt-4"><p>Generalmente toma entre 3 a 5 días hábiles dependiendo de la complejidad.</p></div>
+            </details>
+             <details class="group bg-background-light dark:bg-background-dark rounded-xl border border-gray-100 dark:border-gray-800 open:border-primary/30 transition-all">
+                <summary class="flex justify-between items-center cursor-pointer p-6 list-none font-bold text-lg group-hover:text-primary transition-colors">
+                    ¿Hacen envíos a todo El Salvador? <span class="material-icons text-gray-400 group-open:rotate-180 transition-transform">expand_more</span>
+                </summary>
+                <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t dark:border-gray-800 pt-4"><p>¡Sí! Realizamos envíos a los 14 departamentos de El Salvador.</p></div>
+            </details>
+            <details class="group bg-background-light dark:bg-background-dark rounded-xl border border-gray-100 dark:border-gray-800 open:border-primary/30 transition-all">
+                <summary class="flex justify-between items-center cursor-pointer p-6 list-none font-bold text-lg group-hover:text-primary transition-colors">
+                    ¿Cuáles son los métodos de pago? <span class="material-icons text-gray-400 group-open:rotate-180 transition-transform">expand_more</span>
+                </summary>
+                <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t dark:border-gray-800 pt-4"><p>Aceptamos transferencias bancarias, Tigo Money, Chivo Wallet y tarjetas de crédito.</p></div>
+            </details>
+        </div>
+    </div>
+</section>

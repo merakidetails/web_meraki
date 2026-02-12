@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Styles from original HTML */
+.font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Masonry Support */
+.columns-1 { column-count: 1; }
+@media (min-width: 768px) { .md\:columns-2 { column-count: 2; } }
+@media (min-width: 1024px) { .lg\:columns-3 { column-count: 3; } }
