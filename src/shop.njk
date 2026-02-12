@@ -90,16 +90,7 @@ title: Tienda - Meraki Gift Store
             {% endfor %}
         ];
         console.log('Loaded products:', products); // Debug output
-                id: "{{ product._id }}",
-                title: "{{ product.title }}",
-                price: {{ product.price }},
-                img: "{{ sanity.urlFor(product.image).width(400).url() if product.image else '' }}",
-                category: "{{ product.category }}",
-                code: "{{ product.code if product.code else '' }}",
-                tag: "{{ 'Nuevo' if product.is_new else ('Más vendido' if product.is_bestseller else '') }}"
-            },
-            {% endfor %}
-        ];
+
         
         const maxProductPrice = products.length > 0 ? Math.max(...products.map(p => p.price)) : 100;
         const calculatedMaxPrice = Math.ceil(maxProductPrice + 5);
