@@ -21,8 +21,8 @@ title: Tienda - Meraki Gift Store
             </nav>
             <div class="mt-8 pt-8 border-t border-gray-100 dark:border-white/10">
                 <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Filtrar por Precio</h3>
-                <input class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" type="range" min="0" :max="maxPrice" x-model="maxPrice" />
-                <div class="flex justify-between mt-2 text-xs text-gray-500 font-medium"><span>$0</span><span x-text="'$' + maxPrice"></span></div>
+                <input class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary" type="range" min="0" :max="maxPrice" x-model="priceFilter" />
+                <div class="flex justify-between mt-2 text-xs text-gray-500 font-medium"><span>$0</span><span x-text="'$' + priceFilter"></span></div>
             </div>
         </aside>
 
@@ -42,7 +42,10 @@ title: Tienda - Meraki Gift Store
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <template x-for="prod in filteredProducts" :key="prod.id">
-                    <div class="group bg-white dark:bg-neutral-dark rounded-2xl shadow-sm hover:shadow-lg transition-all border border-gray-100 dark:border-white/5 overflow-hidden flex flex-col">
+                    <div class="group bg-white dark:bg-neutral-dark rounded-2xl shadow-sm hover:shadow-lg transition-all border border-gray-100 dark:border-white/5 overflow-hidden flex flex-col"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform scale-95"
+                         x-transition:enter-end="opacity-100 transform scale-100">
                         <div class="relative aspect-square overflow-hidden bg-gray-50">
                             <template x-if="prod.tag">
                                 <span class="absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded shadow-md uppercase"
@@ -99,12 +102,13 @@ title: Tienda - Meraki Gift Store
             ],
             selectedCategory: 'Todos',
             maxPrice: calculatedMaxPrice,
+            priceFilter: calculatedMaxPrice,
             sortBy: 'popular',
 
             get filteredProducts() {
                 let result = this.products.filter(p => {
                     return (this.selectedCategory === 'Todos' || p.category === this.selectedCategory) &&
-                           p.price <= this.maxPrice;
+                           p.price <= this.priceFilter;
                 });
 
                 if (this.sortBy === 'price_asc') {

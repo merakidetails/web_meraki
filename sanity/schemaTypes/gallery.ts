@@ -16,9 +16,12 @@ export default defineType({
             type: 'string',
             options: {
                 list: [
-                    { title: 'General', value: 'General' },
-                    { title: 'Personalizados', value: 'Personalizados' },
-                    { title: 'Eventos', value: 'Eventos' }
+                    { title: 'Camisas', value: 'Camisas' },
+                    { title: 'Tazas', value: 'Tazas' },
+                    { title: 'Botellas', value: 'Botellas' },
+                    { title: 'Llaveros', value: 'Llaveros' },
+                    { title: 'Cuadros', value: 'Cuadros' },
+                    { title: 'Otros', value: 'Otros' }
                 ]
             }
         }),

@@ -67,29 +67,29 @@ title: Cómo Comprar - Meraki Gift Store
                 </div>
             </div>
 
-            <div x-show="activeTab === 'custom'" class="bg-white dark:bg-surface-dark rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 dark:border-gray-800 flex flex-col lg:flex-row gap-12 items-center tab-content active">
-                <div class="w-full lg:w-1/2 rounded-2xl overflow-hidden aspect-video lg:aspect-square">
+            <div x-show="activeTab === 'custom'" class="bg-white dark:bg-surface-dark rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 dark:border-gray-800 flex flex-col lg:flex-row gap-12 items-center justify-center tab-content active">
+                <div class="w-full lg:w-1/2 rounded-2xl overflow-hidden aspect-video lg:aspect-square shadow-lg">
                     {% if siteSettings.customizeImage %}
                     <img class="w-full h-full object-cover" src="{{ sanity.urlFor(siteSettings.customizeImage).width(800).url() }}" alt="Custom process" />
                     {% endif %}
                 </div>
                 <div class="w-full lg:w-1/2 space-y-8">
                     <h3 class="text-2xl font-bold">Proceso Creativo</h3>
-                    <ul class="space-y-6 relative border-l-2 border-gray-100 dark:border-gray-700 pl-8 ml-6">
+                    <ul class="space-y-6 relative border-l-2 border-gray-200 dark:border-gray-600 pl-8 ml-6">
                         <li class="relative group">
-                            <div class="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors">1</div>
-                            <h4 class="text-lg font-bold group-hover:text-primary transition-colors">Contáctanos</h4>
-                            <p class="text-gray-500 text-sm mt-1">Haz clic en el botón de WhatsApp para iniciar una conversación.</p>
+                            <div class="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors shadow-md">1</div>
+                            <h4 class="font-bold text-lg mb-2">Envíanos tu idea</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Describe lo que tienes en mente o comparte imágenes de referencia.</p>
                         </li>
                         <li class="relative group">
-                            <div class="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors">2</div>
-                            <h4 class="text-lg font-bold group-hover:text-primary transition-colors">Detalles & Referencias</h4>
-                            <p class="text-gray-500 text-sm mt-1">Cuéntanos qué producto deseas y adjunta imágenes de referencia.</p>
+                            <div class="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors shadow-md">2</div>
+                            <h4 class="font-bold text-lg mb-2">Revisamos juntos</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Te mostramos una muestra digital para ajustes.</p>
                         </li>
                         <li class="relative group">
-                            <div class="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors">3</div>
-                            <h4 class="text-lg font-bold group-hover:text-primary transition-colors">Cotización & Pago</h4>
-                            <p class="text-gray-500 text-sm mt-1">Te enviaremos el presupuesto para comenzar la producción.</p>
+                            <div class="absolute -left-[3.1rem] top-0 w-12 h-12 rounded-full bg-white dark:bg-surface-dark border-2 border-primary text-primary flex items-center justify-center font-bold z-10 group-hover:bg-primary group-hover:text-white transition-colors shadow-md">3</div>
+                            <h4 class="font-bold text-lg mb-2">Creamos tu regalo</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">Lo hacemos con amor y atención al detalle.</p>
                         </li>
                     </ul>
                     <a href="https://wa.me/50374446720" target="_blank" class="inline-block bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-8 rounded-xl shadow-lg flex items-center gap-3 transition-transform hover:-translate-y-1 w-max">
