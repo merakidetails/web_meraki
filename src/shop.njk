@@ -71,14 +71,14 @@ title: Tienda - Meraki Gift Store
 <script>
     function shopLogic() {
         const products = [
-            {% for product in collections.products %}
+            {% for product in products %}
             {
-                id: "{{ product.fileSlug }}",
-                title: "{{ product.data.title }}",
-                price: {{ product.data.price }},
-                img: "{{ product.data.image }}",
-                category: "{{ product.data.category }}",
-                tag: "{{ 'Nuevo' if product.data.is_new else ('Más vendido' if product.data.is_bestseller else '') }}"
+                id: "{{ product._id }}",
+                title: "{{ product.title }}",
+                price: {{ product.price }},
+                img: "{{ sanity.urlFor(product.image).width(400).url() if product.image else '' }}",
+                category: "{{ product.category }}",
+                tag: "{{ 'Nuevo' if product.is_new else ('Más vendido' if product.is_bestseller else '') }}"
             },
             {% endfor %}
         ];

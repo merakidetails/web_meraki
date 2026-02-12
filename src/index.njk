@@ -26,13 +26,13 @@ title: Meraki Gift Store - Regalos hechos con amor
             <div class="relative lg:block hidden" x-data="{ 
                 currentIndex: 0, 
                 featuredProducts: [
-                    {% for product in collections.products %}
-                    {% if product.data.is_bestseller %}
+                    {% for product in products %}
+                    {% if product.is_bestseller %}
                     {
-                        title: '{{ product.data.title }}',
-                        price: {{ product.data.price }},
-                        image: '{{ product.data.image }}',
-                        category: '{{ product.data.category }}'
+                        title: '{{ product.title }}',
+                        price: {{ product.price }},
+                        image: '{{ sanity.urlFor(product.image).width(600).url() if product.image else "" }}',
+                        category: '{{ product.category }}'
                     },
                     {% endif %}
                     {% endfor %}
@@ -80,20 +80,22 @@ title: Meraki Gift Store - Regalos hechos con amor
         <a href="/shop" class="text-primary font-semibold flex items-center hover:underline">Ver todo <span class="material-icons text-sm ml-1">arrow_forward</span></a>
      </div>
      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {% set newProducts = collections.products | reverse %}
+        {% set newProducts = products %}
         {% for product in newProducts %}
-        {% if product.data.is_new and loop.index <= 4 %}
+        {% if product.is_new and loop.index <= 4 %}
             <div class="group bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 dark:border-white/10">
                 <div class="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800">
                     <span class="absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded shadow-md uppercase bg-yellow-400 text-black">NUEVO</span>
-                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ product.data.image }}" alt="{{ product.data.title }}" />
+                    {% if product.image %}
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ sanity.urlFor(product.image).width(400).url() }}" alt="{{ product.title }}" />
+                    {% endif %}
                 </div>
                 <div class="p-5">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">{{ product.data.title }}</h3>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">{{ product.title }}</h3>
                     <div class="flex items-center justify-between mt-4">
-                        <span class="text-lg font-bold text-primary">${{ product.data.price }}</span>
+                        <span class="text-lg font-bold text-primary">${{ product.price }}</span>
                         <button class="w-10 h-10 rounded-xl bg-primary/10 text-primary hover:bg-primary hover:text-white flex items-center justify-center transition-all"
-                                @click="addToCart({ id: '{{ product.fileSlug }}', title: '{{ product.data.title }}', price: {{ product.data.price }}, img: '{{ product.data.image }}' })">
+                                @click="addToCart({ id: '{{ product._id }}', title: '{{ product.title }}', price: {{ product.price }}, img: '{{ sanity.urlFor(product.image).width(200).url() if product.image else "" }}' })">
                             <span class="material-icons">add_shopping_cart</span>
                         </button>
                     </div>
