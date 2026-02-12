@@ -86,6 +86,9 @@ title: Meraki Gift Store - Regalos hechos con amor
             <div class="group bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 dark:border-white/10">
                 <div class="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800">
                     <span class="absolute top-3 left-3 z-10 text-[10px] font-bold px-2 py-1 rounded shadow-md uppercase bg-primary text-white">MÁS VENDIDO</span>
+                    {% if product.code %}
+                    <span class="absolute top-2 right-2 z-10 bg-black/60 text-white text-[10px] font-mono px-2 py-0.5 rounded backdrop-blur-sm shadow-sm">{{ product.code }}</span>
+                    {% endif %}
                     {% if product.image %}
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ sanity.urlFor(product.image).width(400).url() }}" alt="{{ product.title }}" />
                     {% endif %}
@@ -95,7 +98,7 @@ title: Meraki Gift Store - Regalos hechos con amor
                     <div class="flex items-center justify-between mt-4">
                         <span class="text-lg font-bold text-primary">${{ product.price }}</span>
                         <button class="w-10 h-10 rounded-xl bg-primary/10 text-primary hover:bg-primary hover:text-white flex items-center justify-center transition-all"
-                                @click="addToCart({ id: '{{ product._id }}', title: '{{ product.title }}', price: {{ product.price }}, img: '{{ sanity.urlFor(product.image).width(200).url() if product.image else "" }}' })">
+                                @click="addToCart({ id: '{{ product._id }}', title: '{{ product.title }}', price: {{ product.price }}, img: '{{ sanity.urlFor(product.image).width(200).url() if product.image else "" }}', code: '{{ product.code if product.code else "" }}' })">
                             <span class="material-icons">add_shopping_cart</span>
                         </button>
                     </div>

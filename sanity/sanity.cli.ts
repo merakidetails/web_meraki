@@ -4,5 +4,6 @@ export default defineCliConfig({
     api: {
         projectId: 'ymm38jhw',
         dataset: 'production'
-    }
+    },
+    studioHost: 'maraki-admin'
 })

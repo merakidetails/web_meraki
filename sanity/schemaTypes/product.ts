@@ -6,6 +6,12 @@ export default defineType({
     type: 'document',
     fields: [
         defineField({
+            name: 'code',
+            title: 'Código de Producto',
+            type: 'string',
+            description: 'Identificador único (ej. CAM-001)',
+        }),
+        defineField({
             name: 'title',
             title: 'Nombre del Producto',
             type: 'string',
